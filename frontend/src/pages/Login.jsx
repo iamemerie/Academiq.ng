@@ -1,0 +1,65 @@
+import React, { useState } from 'react'
+
+function Login() {
+
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Here you would typically send loginData to your backend API for authentication
+    console.log('Login submitted:', loginData)
+  }
+
+  return (
+    <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
+      <div className='bg-white p-10 rounded-2xl shadow-md w-full max-w-md'>
+        <h1 className='text-2xl text-indigo-600 font-bold text-center mb-6'>
+          Login to your account
+        </h1>
+
+        <form
+          onSubmit={handleSubmit}
+          className='flex flex-col gap-4'>
+          <input
+            type="email"
+            name='email'
+            placeholder='Email'
+            className='border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-600'
+            value={loginData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name='password'
+            placeholder='Password'
+            className='border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-600'
+            value={loginData.password}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="submit"
+            className='btn-primary bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700'>
+            Login
+          </button>
+
+          <p className='mt-4 text-center text-sm text-gray-500'>
+            Don't have an account?{' '}
+            <a href="/register" className='text-indigo-600 hover:text-indigo-800 font-medium hover:underline'>Register here</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+
+export default Login
