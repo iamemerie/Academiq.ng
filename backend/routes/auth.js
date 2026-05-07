@@ -1,36 +1,71 @@
-const express = require('express')
-const router = express.Router()
-const User = require('../models/User')
-const bcrypt = require('bcryptjs')
+const express = require("express");
+const router = express.Router();
+const User = require("../models/User"); // Import the User model to interact with the users collection in MongoDB
+const bcrypt = require("bcryptjs"); // Import bcrypt for password hashing
+const jwt = require("jsonwebtoken"); // Import jsonwebtoken for generating JWT tokens
 
-router.post('/register', async (req, res) => {
+// Registration route
+
+router.post("/register", async (req, res) => {
   try {
-    const { fullName, email, password, role } = req.body
+    const { fullName, email, password, role } = req.body;
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email })
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'Email already registered' })
+      return res.status(400).json({ message: "Email already registered" });
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
     const newUser = new User({
       fullName,
       email,
       password: hashedPassword,
-      role
-    })
+      role,
+    });
 
-    await newUser.save()
+    await newUser.save(); // Save the new user to the database
 
-    res.status(201).json({ message: 'Account created successfully' })
-
+    res.status(201).json({ message: "Account created successfully" });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error })
+    res.status(500).json({ message: "Server error", error });
   }
-})
+});
 
-module.exports = router
+//login route
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // step 1 - find the user by email.
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+    // step 2 - compare the provided password with the hashed password in the database.
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // step 3 - generate a JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" },
+    );
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      role: user.role,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+});
+module.exports = router;

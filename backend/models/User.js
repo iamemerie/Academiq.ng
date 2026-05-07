@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true   // Ensure email is unique across users
   },
   password: {
     type: String,
@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'helper'],
+    enum: ['student', 'helper'],   // Restrict role to either 'student' or 'helper'
     required: true
   }
-}, { timestamps: true })
+}, { timestamps: true })   // Automatically add createdAt and updatedAt fields
 
-const user = mongoose.model('User', userSchema)
-module.exports = user
+const user = mongoose.model('User', userSchema)  // Create a Mongoose model named 'User' based on the userSchema
+module.exports = user   // Export the User model for use in other parts of the application
