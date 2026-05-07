@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 
 function Register() {
@@ -9,19 +10,27 @@ function Register() {
     password: '',
     role: ''
   })
-
+  // This function will handle changes to the form inputs. It updates the formData state with the new values.
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
-
+  // This function will handle role selection. It updates the formData state with the selected role.
   const handleRole = (selectedRole) => {
     setFormData({ ...formData, role: selectedRole })
   }
-
-  const handleSubmit = (e) => {
+  // This function will handle form submission. In a real application, you would send formData to your backend API here.
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Here you would typically send formData to your backend API
-    console.log('Form submitted:', formData)
+    try {
+      // Simulate API call
+      const response = await axios.post('http://localhost:5000/api/auth/register', formData)
+      console.log(response.data)
+      // Handle successful registration (e.g., show a success message, redirect to login, etc.)
+      alert(response.data.message)
+    } catch (error) {
+      alert(error.response.data.message || 'Registration failed')
+    }
   }
   return (
     <div className='min-h-screen bg-gray-50 flex items-center justify-center'>

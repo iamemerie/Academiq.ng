@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+
 
 function Login() {
 
@@ -11,10 +13,29 @@ function Login() {
     setLoginData({ ...loginData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Here you would typically send loginData to your backend API for authentication
-    console.log('Login submitted:', loginData)
+    try {
+      // Simulate API call
+      const response = await axios.post('http://localhost:5000/api/auth/login', loginData)
+      const { token, role } = response.data
+      // Store the token in localStorage or context for future authenticated requests
+      localStorage.setItem('token', token)
+      localStorage.setItem('role', role)
+
+      //redirect based on role
+      if (role === 'student') {
+        window.location.href = '/student-dashboard'
+      } else {
+        window.location.href = '/helper-dashboard'
+      }
+      console.log(response.data)
+      // Handle successful login (e.g., store token, redirect to dashboard, etc.)
+      alert(response.data.message)
+    } catch (error) {
+      alert(error.response.data.message || 'Login failed')
+    }
   }
 
   return (
