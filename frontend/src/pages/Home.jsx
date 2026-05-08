@@ -7,7 +7,7 @@ function Home() {
 
       {/* Navbar */}
       <nav className='navbar flex justify-between items-center px-16 py-5 border-b border-gray-200'>
-        <h1 className='logo text-3xl font-bold text-blue-600 drop-shadow-md'>Academic<span className='text-gray-600 hover:text-gray-400'>Aid</span></h1>
+        <h1 className='logo text-3xl font-bold text-blue-600 drop-shadow-md'>Academic<span className='text-gray-600'>Aid</span></h1>
         <div className='nav-links flex items-center gap-6'>
           <a href="/Login" className='text-gray-600 hover:text-indigo-600 font-medium'>Login</a>
           <a href="/register" className='btn-primary bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-700'>Get Started</a>

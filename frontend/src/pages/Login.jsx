@@ -19,16 +19,21 @@ function Login() {
     try {
       // Simulate API call
       const response = await axios.post('http://localhost:5000/api/auth/login', loginData)
-      const { token, role } = response.data
+      const { token, role, fullName } = response.data
       // Store the token in localStorage or context for future authenticated requests
       localStorage.setItem('token', token)
       localStorage.setItem('role', role)
+      localStorage.setItem('fullName', fullName)
+
+      console.log('fullName saved: ', localStorage.getItem('fullName'))
+
+      window.location.href = '/dashboard'
 
       //redirect based on role
       if (role === 'student') {
-        window.location.href = '/student-dashboard'
+        window.location.href = '/dashboard'
       } else {
-        window.location.href = '/helper-dashboard'
+        window.location.href = '/dashboard'
       }
       console.log(response.data)
       // Handle successful login (e.g., store token, redirect to dashboard, etc.)
