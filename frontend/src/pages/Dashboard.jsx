@@ -1,6 +1,11 @@
-import React from 'react'
+import { useState } from 'react'
+import PostRequestModal from './PostRequestModal'
 
 function Dashboard() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+
 
   const fullName = localStorage.getItem('fullName')
   const role = localStorage.getItem('role')
@@ -28,22 +33,24 @@ function Dashboard() {
       {/* Main Content */}
       <div className="px-16 py-10">
         <h1 className="text-3xl font-bold text-gray-800">Welcome back, {fullName}! 👋</h1>
-        <p className="text-gray-500 mt-2">You are logged in as a <span className="font-semibold text-indigo-600">{role === 'student' ? '🎓 Student' : '🤝 Helper'}</span></p>
+        <p className="text-gray-500 mt-2">You are logged in as a <span className="font-semibold text-indigo-600">{role === 'student' ? '🎓 Student' : '👨‍🏫 Tutor'}</span></p>
 
         {/* Quick Actions */}
         <div className="flex gap-4 mt-10">
           <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
             <h3 className="font-bold text-gray-800 mb-2">Post a Request</h3>
             <p className="text-gray-500 text-sm mb-4">Need help? Post your request now.</p>
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Post Now</button>
+            <button onClick={openModal} className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Post Now</button>
           </div>
           <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
-            <h3 className="font-bold text-gray-800 mb-2">Browse Helpers</h3>
-            <p className="text-gray-500 text-sm mb-4">Find the right helper for you.</p>
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Browse</button>
+            <h3 className="font-bold text-gray-800 mb-2">Browse Tutors</h3>
+            <p className="text-gray-500 text-sm mb-4">Find the right tutor for you here.</p>
+            <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 ">Browse</button>
           </div>
         </div>
       </div>
+
+      {isModalOpen && <PostRequestModal onClose={closeModal} />}
     </div>
   )
 }

@@ -83,13 +83,13 @@ function Register() {
             </button>
             <button
               type="button"
-              onClick={() => handleRole('helper')}
-              className={`flex-1 py-3 rounded-xl font-semibold text-sm border-2 ${formData.role === 'helper'
+              onClick={() => handleRole('tutor')}
+              className={`flex-1 py-3 rounded-xl font-semibold text-sm border-2 ${formData.role === 'tutor'
                 ? 'border-indigo-600 bg-indigo-50 text-indigo-600'
                 : 'border-gray-200 text-gray-500'
                 }`}
             >
-              🤝 Helper
+              👨‍🏫 Tutor
             </button>
           </div>
 
