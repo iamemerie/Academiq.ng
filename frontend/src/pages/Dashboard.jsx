@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import PostRequestModal from '../pages/PostRequestModal'
+import PostRequestModal from '../components/PostRequestModal'
+import Navbar from '../components/Navbar'
 import axios from 'axios'
 
 function Dashboard() {
@@ -42,14 +43,7 @@ function Dashboard() {
     <div className="min-h-screen bg-gray-50">
 
       {/* Navbar */}
-      <nav className="bg-white px-16 py-5 shadow-sm flex justify-between items-center">
-        <h1 className="text-xl font-bold text-indigo-600">Academic<span className="text-gray-600">Aid</span></h1>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-sm">
-          Logout
-        </button>
-      </nav>
+      <Navbar />
 
       {/* Main Content */}
       <div className="px-16 py-10">
@@ -58,17 +52,37 @@ function Dashboard() {
 
         {/* Quick Actions */}
         <div className="flex gap-4 mt-10">
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
-            <h3 className="font-bold text-gray-800 mb-2">Post a Request</h3>
-            <p className="text-gray-500 text-sm mb-4">Need help? Post your request now.</p>
-            <button onClick={openModal} className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Post Now</button>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
-            <h3 className="font-bold text-gray-800 mb-2">Browse Tutors</h3>
-            <p className="text-gray-500 text-sm mb-4">Find the right tutor for you here.</p>
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 ">Browse</button>
-          </div>
-          {/* My Requests */}
+          {role === 'student' ? (
+            <>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+                <h3 className="font-bold text-gray-800 mb-2">Post a Request</h3>
+                <p className="text-gray-500 text-sm mb-4">Need help? Post your request now.</p>
+                <button onClick={openModal} className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Post Now</button>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+                <h3 className="font-bold text-gray-800 mb-2">Explore Tutors</h3>
+                <p className="text-gray-500 text-sm mb-4">Find the right tutor for you here.</p>
+                <a href="/browse-tutors" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Browse</a>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+                <h3 className="font-bold text-gray-800 mb-2">Explore Requests</h3>
+                <p className="text-gray-500 text-sm mb-4">Find students who need your help.</p>
+                <a href="/browse-requests" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Discover</a>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+                <h3 className="font-bold text-gray-800 mb-2">My Sessions</h3>
+                <p className="text-gray-500 text-sm mb-4">View and manage your active sessions.</p>
+                <a href="/my-sessions" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">View</a>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* My Requests */}
+        {role === 'student' && (
           <div className="mt-10">
             <h2 className="text-xl font-bold text-gray-800 mb-4">My Requests</h2>
 
@@ -94,7 +108,7 @@ function Dashboard() {
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
 
       {isModalOpen && <PostRequestModal onClose={closeModal} />}

@@ -5,6 +5,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
 import Dashboard from './pages/Dashboard'
+import BrowseTutors from './pages/BrowseTutor'
 
 function App() {
 
@@ -17,6 +18,11 @@ function App() {
       <Route path="/dashboard" element={
         <ProtectedRoute>
           <Dashboard />
+        </ProtectedRoute>
+      } />
+      <Route path="/browse-tutors" element={
+        <ProtectedRoute>
+          <BrowseTutors />
         </ProtectedRoute>
       } />
     </Routes>

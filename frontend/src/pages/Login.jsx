@@ -37,7 +37,6 @@ function Login() {
       }
       console.log(response.data)
       // Handle successful login (e.g., store token, redirect to dashboard, etc.)
-      alert(response.data.message)
     } catch (error) {
       alert(error.response.data.message || 'Login failed')
     }
