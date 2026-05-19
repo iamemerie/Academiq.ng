@@ -54,12 +54,12 @@ function Dashboard() {
         <div className="flex gap-4 mt-10">
           {role === 'student' ? (
             <>
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <h3 className="font-bold text-gray-800 mb-2">Post a Request</h3>
                 <p className="text-gray-500 text-sm mb-4">Need help? Post your request now.</p>
                 <button onClick={openModal} className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Post Now</button>
               </div>
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <h3 className="font-bold text-gray-800 mb-2">Explore Tutors</h3>
                 <p className="text-gray-500 text-sm mb-4">Find the right tutor for you here.</p>
                 <a href="/browse-tutors" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Browse</a>
@@ -67,12 +67,12 @@ function Dashboard() {
             </>
           ) : (
             <>
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <h3 className="font-bold text-gray-800 mb-2">Explore Requests</h3>
                 <p className="text-gray-500 text-sm mb-4">Find students who need your help.</p>
                 <a href="/browse-requests" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">Discover</a>
               </div>
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm">
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 w-60 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <h3 className="font-bold text-gray-800 mb-2">My Sessions</h3>
                 <p className="text-gray-500 text-sm mb-4">View and manage your active sessions.</p>
                 <a href="/my-sessions" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700">View</a>

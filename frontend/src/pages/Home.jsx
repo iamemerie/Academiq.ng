@@ -32,7 +32,6 @@ function Home() {
       </section>
 
 
-
       {/* Features Section */}
       <section className="features flex justify-center gap-6 px-16 py-16 bg-gray-50">
         <div className="feature-card bg-white border border-gray-200 rounded-2xl p-8 max-w-xs text-center">
@@ -54,7 +53,6 @@ function Home() {
       <footer className="text-center py-8 text-gray-400 text-sm border-t border-gray-200">
         © 2026 AcademicAid. All rights reserved.
       </footer>
-
     </div>
   )
 }
