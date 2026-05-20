@@ -1,8 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
+import TutorProfileModal from './TutorProfileModal'
 
 function Navbar() {
   const fullName = localStorage.getItem('fullName')
   const role = localStorage.getItem('role')
+
+  const [showProfileModal, setShowProfileModal] = useState(false)
+
 
   const handleLogout = () => {
     localStorage.clear()
@@ -35,7 +39,7 @@ function Navbar() {
           </button>
 
           {/* Avatar */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => role === 'tutor' && setShowProfileModal(true)}>
             <div className="h-9 w-9 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-bold">
               {fullName?.charAt(0).toUpperCase()}
             </div>
@@ -53,6 +57,12 @@ function Navbar() {
           </button>
         </div>
       </nav>
+
+      {/* Modal goes here — outside nav but inside return */}
+      {showProfileModal && (
+        <TutorProfileModal onClose={() => setShowProfileModal(false)} />
+      )}
+
     </div>
   )
 }

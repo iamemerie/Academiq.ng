@@ -16,8 +16,24 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'helper'],   // Restrict role to either 'student' or 'helper'
+    enum: ['student', 'tutor'],   // Restrict role to either 'student' or 'helper'
     required: true
+  },
+  bio: {
+    type: String,
+    default: ''   // Optional field for user biography, defaults to an empty string
+  },
+  subjects: {
+    type: [String],   // Array of strings to store subjects the user is interested in or can tutor
+    default: []   // Default to an empty array if no subjects are provided
+  },
+  isOnline: {
+    type: Boolean,
+    default: false   // Track whether the user is currently online, defaults to false
+  },
+  availability: {
+    type: [String],   // Array of strings to represent the user's availability (e.g., "Monday 9-11am")
+    default: ""
   }
 }, { timestamps: true })   // Automatically add createdAt and updatedAt fields
 

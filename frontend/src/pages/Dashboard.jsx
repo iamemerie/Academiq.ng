@@ -17,15 +17,15 @@ function Dashboard() {
   const [requests, setRequests] = useState([])
 
   useEffect(() => {
-    const fetchRequests = async () => {
+    const fetchRequests = async () => { // Fetch only the requests posted by the logged-in student
       try {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token') // Get the token from localStorage
         const response = await axios.get('http://localhost:5000/api/requests/my-requests', {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
+          }, // Include the token in the Authorization header
         })
-        setRequests(response.data)
+        setRequests(response.data) // Set the fetched requests to state
       } catch (error) {
         console.error('Error fetching requests:', error)
       }
