@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
 import Dashboard from './pages/Dashboard'
 import BrowseTutors from './pages/BrowseTutor'
+import BrowseRequests from './pages/BrowseRequests'
 
 function App() {
 
@@ -23,6 +24,11 @@ function App() {
       <Route path="/browse-tutors" element={
         <ProtectedRoute>
           <BrowseTutors />
+        </ProtectedRoute>
+      } />
+      <Route path="/browse-requests" element={
+        <ProtectedRoute>
+          <BrowseRequests />
         </ProtectedRoute>
       } />
     </Routes>

@@ -129,13 +129,12 @@ function PostRequestModal({ onClose }) {
                     <option value="300">300 Level</option>
                     <option value="400">400 Level</option>
                     <option value="500">500 Level</option>
+                    <option value="600">600 Level</option>
+                    <option value="masters">Masters</option>
                   </>
                 )}
                 {formData.schoolType === 'secondary' && (
                   <>
-                    <option value="JSS1">JSS 1</option>
-                    <option value="JSS2">JSS 2</option>
-                    <option value="JSS3">JSS 3</option>
                     <option value="SS1">SS 1</option>
                     <option value="SS2">SS 2</option>
                     <option value="SS3">SS 3</option>

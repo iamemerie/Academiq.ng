@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import TutorProfileModal from './TutorProfileModal'
+import StudentProfileModal from './StudentProfileModal'
 
 function Navbar() {
   const fullName = localStorage.getItem('fullName')
@@ -24,7 +25,7 @@ function Navbar() {
 
         {/* Nav Links */}
         <div className="flex items-center gap-6">
-          <a href="/dashboard" className="text-sm text-gray-500  hover:text-indigo-600 font-medium transition">Orbit</a>
+          <a href="/dashboard" className="text-sm text-gray-500  hover:text-indigo-600 font-medium transition">Home</a>
           {role === 'student' ? (
             <a href="/browse-tutors" className="text-sm text-gray-500 hover:text-indigo-600 font-medium transition">Explore Tutors</a>
           ) : (
@@ -39,7 +40,7 @@ function Navbar() {
           </button>
 
           {/* Avatar */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => role === 'tutor' && setShowProfileModal(true)}>
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setShowProfileModal(true)}>
             <div className="h-9 w-9 rounded-full bg-indigo-600 flex items-center justify-center text-white text-sm font-bold">
               {fullName?.charAt(0).toUpperCase()}
             </div>
@@ -59,8 +60,12 @@ function Navbar() {
       </nav>
 
       {/* Modal goes here — outside nav but inside return */}
-      {showProfileModal && (
+      {showProfileModal && role === 'tutor' && (
         <TutorProfileModal onClose={() => setShowProfileModal(false)} />
+      )}
+
+      {showProfileModal && role === 'student' && (
+        <StudentProfileModal onClose={() => setShowProfileModal(false)} />
       )}
 
     </div>
