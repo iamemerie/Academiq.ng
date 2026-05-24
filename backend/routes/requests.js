@@ -38,4 +38,16 @@ router.get('/my-requests', protect, async (req, res) => {
 });
 
 
+//Get all open requests( for tutor to browse)
+router.get('/all', protect, async (req, res) => {
+  try {
+    const requests = await Request.find({ status: 'open' })
+    .populate('student', 'fullName email bio school level') // Populate the student field with the fullName and email of the associated user
+    .sort({ createdAt: -1 }); // Sort requests by creation date in descending order
+    res.status(200).json(requests); // find all open requests.
+    }
+  catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
 module.exports = router; // Export the router to be used in other parts of the application

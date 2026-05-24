@@ -83,14 +83,14 @@ router.get("/tutors", protect, async (req, res) => {
 })
 
 
-// Update tutor profile
+// Update  profile
 router.put('/update-profile', protect, async (req, res) => {
   try {
-    const { bio, subjects, availability } = req.body
+    const { bio, subjects, availability, school, level } = req.body
 
     const updatedUser = await User.findByIdAndUpdate( // Find the user by their ID (extracted from the JWT token by the protect middleware)
       req.user.userId,
-      { bio, subjects, availability },
+      { bio, subjects, availability, school, level },
       { new: true } // Return the updated user document after the update is applied
     ).select('-password')
 

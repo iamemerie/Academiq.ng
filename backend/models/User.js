@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'tutor'],   // Restrict role to either 'student' or 'helper'
+    enum: ['student', 'tutor'],   // Restrict role to either 'student' or 'tutor'
     required: true
   },
   bio: {
@@ -34,6 +34,14 @@ const userSchema = new mongoose.Schema({
   availability: {
     type: [String],   // Array of strings to represent the user's availability (e.g., "Monday 9-11am")
     default: ""
+  },
+  school: {
+    type: String,
+    default: ""   // Optional field for the user's school, defaults to an empty string
+  },
+  level: {
+    type: String,
+    default: ""   // Optional field for the user's academic level, defaults to an empty string
   }
 }, { timestamps: true })   // Automatically add createdAt and updatedAt fields
 

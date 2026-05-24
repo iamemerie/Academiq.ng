@@ -14,6 +14,8 @@ const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
 const requestRoutes = require("./routes/requests");
 app.use("/api/requests", requestRoutes);
+const bookingRoutes = require("./routes/bookings");
+app.use("/api/bookings", bookingRoutes);
 
 // Test route
 app.get("/", (req, res) => {
