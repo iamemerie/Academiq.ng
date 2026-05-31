@@ -8,16 +8,15 @@ function Home() {
       <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-16 py-4 flex justify-between items-center shadow-sm">
 
         {/* Logo */}
-        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif" }} className="text-2xl font-bold text-indigo-600">
-          Academic<span style={{ fontFamily: "'Space Grotesk', sans-serif" }} className="text-violet-500">Aid</span>
+        <h1 style={{ fontFamily: "'Space Grotesk', sans-serif" }} className="text-2xl font-bold text-indigo-600 ">
+          Academic<span style={{ fontFamily: "'Space Grotesk', sans-serif" }} className="text-violet-500">aids.ng</span>
         </h1>
 
         {/* Nav Links */}
         <div className="flex items-center gap-8">
           <a href="#features" className="text-sm text-gray-500 hover:text-indigo-600 font-medium transition">Features</a>
-          <a href="#how-it-works" className="text-sm text-gray-500 hover:text-indigo-600 font-medium transition">How it Works</a>
           <a href="/login" className="text-sm text-gray-500 hover:text-indigo-600 font-medium transition">Login</a>
-          <a href="/register" className="bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition">
+          <a href="/register" className="bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200">
             Get Started
           </a>
         </div>
@@ -51,7 +50,7 @@ function Home() {
 
       {/* Footer */}
       <footer className="text-center py-8 text-gray-400 text-sm border-t border-gray-200">
-        © 2026 AcademicAid. All rights reserved.
+        © 2026 Academicaids.ng. All rights reserved.
       </footer>
     </div>
   )

@@ -20,7 +20,7 @@ function Navbar() {
 
         {/* Logo */}
         <h1 className="text-2xl font-black text-indigo-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          Academic<span className="text-violet-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Aid</span>
+          Academic<span className="text-violet-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>aids.ng</span>
         </h1>
 
         {/* Nav Links */}
