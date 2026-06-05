@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const reviewRoutes = require("./routes/reviews");
 
 const app = express();
 
@@ -36,6 +37,9 @@ const requestRoutes = require("./routes/requests");
 app.use("/api/requests", requestRoutes);
 const bookingRoutes = require("./routes/bookings");
 app.use("/api/bookings", bookingRoutes);
+
+// Add this line right here:
+app.use("/api/reviews", reviewRoutes);
 
 // Test route
 app.get("/", (req, res) => {

@@ -4,9 +4,12 @@ const User = require("../models/User"); // Import the User model to interact wit
 const bcrypt = require("bcryptjs"); // Import bcrypt for password hashing
 const jwt = require("jsonwebtoken"); // Import jsonwebtoken for generating JWT tokens
 const protect = require('../middleware/authMiddleware') // Import the authentication middleware to protect routes
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-// Registration route
-
+// ==========================================
+// 1. Registration Route
+// ==========================================
 router.post("/register", async (req, res) => {
   try {
     const { fullName, email, password, role } = req.body;
@@ -36,8 +39,9 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//login route
-
+// ==========================================
+// 2. Standard Login Route
+// ==========================================
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -69,10 +73,59 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
+});
+
+// ==========================================
+// 3. Google OAuth Route (Now properly separated!)
+// ==========================================
+router.post('/google', async (req, res) => {
+  try {
+    const { token } = req.body
+
+    // Verify the Google token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    })
+
+    const { name, email, picture } = ticket.getPayload()
+
+    // Check if user already exists
+    let user = await User.findOne({ email })
+
+    if (!user) {
+      // Create new user if doesn't exist
+      user = new User({
+        fullName: name,
+        email,
+        password: 'google-auth', 
+        role: 'student' // default role
+      })
+      await user.save()
+    }
+
+    // Generate JWT token
+    const jwtToken = jwt.sign(
+      { userId: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    )
+
+    res.status(200).json({
+      message: 'Login successful',
+      token: jwtToken,
+      role: user.role,
+      fullName: user.fullName
+    })
+
+  } catch (error) {
+    res.status(401).json({ message: 'Google authentication failed', error })
+  }
 })
 
-// Get all tutors
-
+// ==========================================
+// 4. Get All Tutors Route
+// ==========================================
 router.get("/tutors", protect, async (req, res) => {
   try {
     const tutors = await User.find({ role: 'tutor' }).select('-password') // Exclude the password field from the response
@@ -82,16 +135,17 @@ router.get("/tutors", protect, async (req, res) => {
   }
 })
 
-
-// Update  profile
+// ==========================================
+// 5. Update Profile Route
+// ==========================================
 router.put('/update-profile', protect, async (req, res) => {
   try {
     const { bio, subjects, availability, school, level } = req.body
 
-    const updatedUser = await User.findByIdAndUpdate( // Find the user by their ID (extracted from the JWT token by the protect middleware)
+    const updatedUser = await User.findByIdAndUpdate( // Find the user by their ID
       req.user.userId,
       { bio, subjects, availability, school, level },
-      { new: true } // Return the updated user document after the update is applied
+      { new: true } // Return the updated user document
     ).select('-password')
 
     res.status(200).json({ message: 'Profile updated successfully', user: updatedUser })
@@ -101,4 +155,4 @@ router.put('/update-profile', protect, async (req, res) => {
   }
 })
 
-module.exports = router
+module.exports = router;
