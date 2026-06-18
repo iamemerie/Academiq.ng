@@ -1,5 +1,22 @@
 const mongoose = require('mongoose')
 
+// Defining a structured sub-schema for schedule management
+const availabilityWindowSchema = new mongoose.Schema({
+  dayOfWeek: {
+    type: String,
+    enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    required: true
+  },
+  startTime: {
+    type: String, // Stored as 24-hour format string (e.g., "14:00")
+    required: true
+  },
+  endTime: {
+    type: String, // Storing as 24-hour format string (e.g., "16:00")
+    required: true
+  }
+}, { _id: false }) // Prevents Mongoose from creating an internal _id field for every single time-slot entry
+
 const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
@@ -31,10 +48,13 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false   // Track whether the user is currently online, defaults to false
   },
+  
+  // UPGRADED FIELD: Now holds structural time items instead of raw text strings
   availability: {
-    type: [String],   // Array of strings to represent the user's availability (e.g., "Monday 9-11am")
-    default: ""
+    type: [availabilityWindowSchema],
+    default: [] // Clean default array instantiation
   },
+
   school: {
     type: String,
     default: ""   // Optional field for the user's school, defaults to an empty string

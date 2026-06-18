@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import BrowseTutors from "./pages/BrowseTutor";
 import BrowseRequests from "./pages/BrowseRequests";
 import MyBookings from "./pages/MyBookings";
+import SessionManager from "./pages/SessionManager";
 
 function App() {
   return (
@@ -44,6 +45,14 @@ function App() {
         element={
           <ProtectedRoute>
             <MyBookings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-sessions"
+        element={
+          <ProtectedRoute>
+            <SessionManager />
           </ProtectedRoute>
         }
       />

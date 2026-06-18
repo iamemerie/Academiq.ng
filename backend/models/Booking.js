@@ -16,12 +16,32 @@ const bookingSchema = new mongoose.Schema({
     ref: 'Request',
     required: true
   },
+  // ADDED: The specific topic or lesson focus being taught
+  subject: {
+    type: String,
+    required: true
+  },
+  // ADDED: Exact calendar date for the scheduled meeting
+  sessionDate: {
+    type: Date,
+    required: true
+  },
+  // ADDED: Clear window interval matching the tutor's availability schema layout (e.g., "14:00 - 16:00")
+  timeSlot: {
+    type: String,
+    required: true
+  },
+  // ADDED: The secure virtual classroom link (Google Meet, Zoom, or your custom video path)
+  meetingLink: {
+    type: String,
+    default: ""
+  },
   status: {
     type: String,
-    enum: ['pending', 'active', 'declined', 'completed'], // Restrict status to these values
-    default: 'pending' // Default status is 'pending'
+    enum: ['pending', 'active', 'declined', 'completed'], 
+    default: 'pending' 
   }
-}, { timestamps: true }); // Automatically add createdAt and updatedAt fields
+}, { timestamps: true }); 
 
-const Booking = mongoose.model('Booking', bookingSchema); // Create a Mongoose model named 'Booking' based on the bookingSchema
-module.exports = Booking; // Export the Booking model for use in other parts of the application
+const Booking = mongoose.model('Booking', bookingSchema); 
+module.exports = Booking;
