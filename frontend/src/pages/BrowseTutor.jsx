@@ -47,7 +47,7 @@ function BrowseTutors() {
   }, []);
 
   // Global component layout font configuration engine
-  const fontStyle = { fontFamily: "'Space Grotesk', 'Poppins', sans-serif" };
+  const fontStyle = { fontFamily: "'Space Grotesk', sans-serif" };
 
   return (
     <div className="min-h-screen bg-slate-50/50 antialiased" style={fontStyle}>

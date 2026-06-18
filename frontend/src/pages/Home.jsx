@@ -23,8 +23,8 @@ function Home() {
             </svg>
           </div>
           <h1 className="text-xl font-black text-slate-800 tracking-tight">
-            Academic
-            <span className="text-indigo-600 font-extrabold">aids.ng</span>
+            Academ
+            <span className="text-indigo-600 font-extrabold">IQ.ng</span>
           </h1>
         </div>
 

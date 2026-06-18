@@ -49,14 +49,33 @@ function Navbar() {
             </svg>
           </div>
           <h1 className="text-xl font-black text-slate-800 tracking-tight">
-            Academic
-            <span className="text-indigo-600 font-extrabold">aids.ng</span>
+            Academ
+            <span className="text-indigo-600 font-extrabold">IQ.ng</span>
           </h1>
         </Link>
 
         {/* INTERACTION LINKS & ACTIONS CONTROLLER CONTAINER */}
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-6">
+            <a
+              href="/ai-assistant"
+              className="group flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-600 font-medium transition"
+            >
+              <svg
+                className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.813 15.904L9 21l-.813-5.096L3 15l5.187-.813L9 9l.813 5.187L15 15l-5.187.813zM19.071 4.929l-.707 1.95-1.95.707 1.95.707.707 1.95.707-1.95 1.95-.707-1.95-.707-.707-1.95z"
+                />
+              </svg>
+              <span>Academiq AI</span>
+            </a>
             <Link to="/dashboard" className={getLinkClass("/dashboard")}>
               Home
             </Link>

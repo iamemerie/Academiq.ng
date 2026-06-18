@@ -9,6 +9,8 @@ import BrowseTutors from "./pages/BrowseTutor";
 import BrowseRequests from "./pages/BrowseRequests";
 import MyBookings from "./pages/MyBookings";
 import SessionManager from "./pages/SessionManager";
+import AdminDashboard from "./pages/AdminDashboard";
+import AIAssistant from "./pages/AIAssistant";
 
 function App() {
   return (
@@ -53,6 +55,16 @@ function App() {
         element={
           <ProtectedRoute>
             <SessionManager />
+          </ProtectedRoute>
+        }
+      />
+      {/* 🪓 TEMPORARY BYPASS: Strip the guards so you can view it right now */}
+      <Route path="/admin/control-panel" element={<AdminDashboard />} />
+      <Route
+        path="/ai-assistant"
+        element={
+          <ProtectedRoute>
+            <AIAssistant />
           </ProtectedRoute>
         }
       />
