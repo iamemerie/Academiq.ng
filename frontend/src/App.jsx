@@ -11,8 +11,6 @@ import MyBookings from "./pages/MyBookings";
 import SessionManager from "./pages/SessionManager";
 import AdminDashboard from "./pages/AdminDashboard";
 import AIAssistant from "./pages/AIAssistant";
-import ForgotPasswordPage from "./pages/ForgotPassword";
-import ResetPasswordPage from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -70,7 +68,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-      // In your App.jsx routes configuration
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
     </Routes>
