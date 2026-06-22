@@ -3,13 +3,16 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// Automatically swaps between your live Render URL on Netlify and localhost on your computer
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: "", // Added to track state safely
+    confirmPassword: "", 
     role: "",
   });
 
@@ -25,7 +28,6 @@ function Register() {
     setFormData((prev) => ({ ...prev, role: selectedRole }));
   };
 
-  // Upgraded Validation & Submit Routine
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,7 +44,7 @@ function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${API_BASE_URL}/api/auth/register`,
         {
           fullName: formData.fullName,
           email: formData.email,
@@ -74,8 +76,8 @@ function Register() {
     try {
       const token = credentialResponse.credential;
       const response = await axios.post(
-        "http://localhost:5000/api/auth/google",
-        { token, role: formData.role }, // Sending role to backend for custom onboarding logic
+        `${API_BASE_URL}/api/auth/google`,
+        { token, role: formData.role }, 
       );
 
       localStorage.setItem("token", response.data.token);
@@ -102,7 +104,7 @@ function Register() {
             Create your account
           </h1>
           <p className="text-xs text-slate-400 font-medium mt-1">
-            Join Academicaids.ng to streamline your learning tasks
+            Join Academiq.ng to streamline your learning tasks
           </p>
         </div>
 
@@ -198,7 +200,7 @@ function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-indigo-600 text-white py-3 rounded-xl text-xs font-bold tracking-wide hover:bg-indigo-700 transition shadow-sm hover:shadow-[0_4px_12px_rgba(79,70,229,0.2)] font-semibold mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-indigo-600 text-white py-3 rounded-xl text-xs font-bold tracking-wide hover:bg-indigo-700 transition shadow-sm hover:shadow-[0_4px_12px_rgba(79,70,229,0.2)] mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Creating Account..." : "Register"}
           </button>

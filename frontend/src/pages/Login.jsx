@@ -3,6 +3,9 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// This automatically uses your live Render URL on Netlify, and falls back to localhost on your laptop
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function Login() {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -22,7 +25,7 @@ function Login() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_BASE_URL}/api/auth/login`,
         loginData,
       );
       const { token, role, fullName } = response.data;
@@ -46,7 +49,7 @@ function Login() {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/google",
+        `${API_BASE_URL}/api/auth/google`,
         { token: credentialResponse.credential },
       );
 
@@ -81,7 +84,7 @@ function Login() {
   const handleRoleSelect = async (selectedRole) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/google",
+        `${API_BASE_URL}/api/auth/google`,
         { token: googlePending.token, role: selectedRole },
       );
 

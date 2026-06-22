@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'tutor'],   // Restrict role to either 'student' or 'tutor'
+    enum: ['student', 'tutor', 'admin'],   // Restrict role to either 'student', 'tutor' or 'admin'
     required: true
   },
   bio: {
@@ -62,6 +62,24 @@ const userSchema = new mongoose.Schema({
   level: {
     type: String,
     default: ""   // Optional field for the user's academic level, defaults to an empty string
+  },
+  // Add this inside your userSchema in backend/models/User.js
+  isBanned: {
+    type: Boolean,
+    default: false
+  },
+  verificationStatus: {
+    type: String, // This field tracks the verification status of tutors
+    enum: ['none', 'pending', 'approved', 'rejected'],
+    default: 'none'
+  },
+  verificationDocument: {
+    type: String,   // This will store the file path or URL to the uploaded verification document
+    default: ""
+  },
+  verificationRejectionReason: {
+    type: String,
+    default: ""
   }
 }, { timestamps: true })   // Automatically add createdAt and updatedAt fields
 
