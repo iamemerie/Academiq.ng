@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-// This automatically uses your live Render URL on Netlify, and falls back to localhost on your laptop
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Login() {
@@ -48,10 +47,9 @@ function Login() {
   // Step 1 — try Google login
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/api/auth/google`,
-        { token: credentialResponse.credential },
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/auth/google`, {
+        token: credentialResponse.credential,
+      });
 
       // New user — backend says they need to pick a role
       if (response.data.needsRole) {
@@ -83,7 +81,7 @@ function Login() {
   // Step 2 — after they pick a role
   const handleRoleSelect = async (selectedRole) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${API_BASE_URL}/api/auth/google`,
         { token: googlePending.token, role: selectedRole },
       );
@@ -199,6 +197,16 @@ function Login() {
           </button>
         </form>
 
+        <p className="mt-8 text-center text-xs font-semibold text-slate-400 tracking-tight">
+          Forgot password?{" "}
+          <Link
+            to="/forgot-password"
+            className="text-indigo-600 font-bold hover:text-indigo-800 transition pl-0.5"
+          >
+            Reset it here
+          </Link>
+        </p>
+
         {/* DIVIDER */}
         <div className="flex items-center gap-3 my-6">
           <div className="flex-1 h-px bg-slate-100"></div>
@@ -208,15 +216,28 @@ function Login() {
           <div className="flex-1 h-px bg-slate-100"></div>
         </div>
 
-        {/* GOOGLE BUTTON */}
-        <div className="w-full flex justify-center [&>div]:w-full">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => alert("Google Identity Verification Failed")}
-            shape="rectangular"
-            theme="outline"
-            width="100%"
-          />
+        {/* GOOGLE BUTTON CONTAINER */}
+        <div className="w-full flex justify-center items-center mt-4">
+          {/* The colorScheme style keeps the iframe rendering clean across dark/light transitions */}
+          <div
+            style={{ colorScheme: "light" }}
+            className="w-full flex justify-center"
+          >
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess} // replace with your success handler
+              onError={() => console.log("Login Failed")}
+              // 1. DISABLES AUTOMATIC EMAIL PICKING & PROMPTS
+              auto_select={false} // 👈 Stops Google from automatically logging you in without a click
+              useOneTap={false} // 👈 Stops the intrusive floating sidebar banner prompt
+              // 2. FORCES UNIFORM COMPONENT TEXT
+              text="signin_with" // Options: "signin_with" | "signup_with" | "continue_with"
+              shape="rectangular"
+              theme="outline"
+              size="large"
+              // 3. FIXES ALIGNMENT TRAP
+              width="320" // 👈 CRITICAL: Shrinks the actual iframe boundary block to 320px
+            />
+          </div>
         </div>
 
         <p className="mt-8 text-center text-xs font-semibold text-slate-400 tracking-tight">

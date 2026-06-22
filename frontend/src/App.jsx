@@ -68,6 +68,9 @@ function App() {
           </ProtectedRoute>
         }
       />
+      // In your App.jsx routes configuration
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
     </Routes>
   );
 }
