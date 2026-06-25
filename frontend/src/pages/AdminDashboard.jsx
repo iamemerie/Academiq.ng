@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const BASE_URL = "http://localhost:5000/api";
-const ADMIN_EMAIL = "micheal@gmail.com"; // replace with decoded JWT sub
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const ADMIN_EMAIL = "wisdomchukwu326@gmail.com";
 
-// ─── Axios factory (re-reads token each call so logout is instant) ────────────
+// ─── Axios factory ────────────────────────────────────────────────────────────
 const api = (path = "") =>
   axios.create({
     baseURL: `${BASE_URL}/admin${path}`,
@@ -251,6 +252,8 @@ function UserDrawer({
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function AdminDashboard() {
+  const navigate = useNavigate(); // ✅ FIXED
+
   const [metrics, setMetrics] = useState({
     totalUsers: 0,
     tutorsRegistered: 0,
@@ -288,11 +291,12 @@ export default function AdminDashboard() {
   const removeToast = (id) =>
     setToasts((prev) => prev.filter((t) => t.id !== id));
 
+  // ✅ FIXED: uses navigate() instead of window.location.href
   const handleLogout = useCallback(() => {
     localStorage.removeItem("token");
     sessionStorage.clear();
-    window.location.href = "/login";
-  }, []);
+    navigate("/login");
+  }, [navigate]);
 
   const fetchData = useCallback(
     async (silent = false) => {

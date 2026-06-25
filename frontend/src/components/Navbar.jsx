@@ -1,18 +1,19 @@
 import { useState } from "react";
 import TutorProfileModal from "./TutorProfileModal";
 import StudentProfileModal from "./StudentProfileModal";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const fullName = localStorage.getItem("fullName") || "User";
   const role = localStorage.getItem("role");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   const getLinkClass = (path) => {
@@ -28,8 +29,6 @@ function Navbar() {
 
   return (
     <>
-      {" "}
-      {/* ✨ FIX: Removed the <div className="w-full"> wrapper to unblock sticky behavior */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100/80 px-8 lg:px-16 py-4 flex justify-between items-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.01)]">
         {/* BRAND LOGO AREA */}
         <Link
@@ -57,8 +56,8 @@ function Navbar() {
         {/* INTERACTION LINKS & ACTIONS CONTROLLER CONTAINER */}
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-6">
-            <a
-              href="/ai-assistant"
+            <Link
+              to="/ai-assistant"
               className="group flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-600 font-medium transition"
             >
               <svg
@@ -75,7 +74,8 @@ function Navbar() {
                 />
               </svg>
               <span>Academiq AI</span>
-            </a>
+            </Link>
+
             <Link to="/dashboard" className={getLinkClass("/dashboard")}>
               Home
             </Link>
@@ -147,6 +147,7 @@ function Navbar() {
           </button>
         </div>
       </nav>
+
       {/* POPUP MODALS INJECTION POINTS */}
       {showProfileModal && role === "tutor" && (
         <TutorProfileModal onClose={() => setShowProfileModal(false)} />
@@ -154,7 +155,7 @@ function Navbar() {
       {showProfileModal && role === "student" && (
         <StudentProfileModal onClose={() => setShowProfileModal(false)} />
       )}
-    </> /* ✨ FIX: Matching Fragment closer tags */
+    </>
   );
 }
 
