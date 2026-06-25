@@ -222,7 +222,7 @@ function Login() {
               onError={() => console.log("Login Failed")}
               auto_select={false}
               useOneTap={false}
-              text="signin_with"
+              text="continue_with"
               shape="rectangular"
               theme="outline"
               size="medium"
