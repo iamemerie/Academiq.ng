@@ -125,13 +125,13 @@ function Dashboard() {
                       Find the perfect verified tutor matching your exact
                       academic needs here.
                     </p>
-                    <a
-                      href="/browse-tutors"
+                    <Link
+                      to="/browse-tutors"
                       className="block w-full bg-indigo-600 text-white py-2.5 rounded-xl text-xs font-bold tracking-wide text-center hover:bg-indigo-700 shadow-sm hover:shadow-md transition"
                       style={fontStyle}
                     >
                       Browse
-                    </a>
+                    </Link>
                   </div>
 
                   {/* Card 3: My Sessions */}
