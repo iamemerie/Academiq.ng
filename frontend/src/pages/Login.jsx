@@ -11,7 +11,6 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Role picker state for new Google users
   const [showRolePicker, setShowRolePicker] = useState(false);
   const [googlePending, setGooglePending] = useState(null);
 
@@ -44,14 +43,12 @@ function Login() {
     }
   };
 
-  // Step 1 — try Google login
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth/google`, {
         token: credentialResponse.credential,
       });
 
-      // New user — backend says they need to pick a role
       if (response.data.needsRole) {
         setGooglePending({
           name: response.data.name,
@@ -62,7 +59,6 @@ function Login() {
         return;
       }
 
-      // Existing user — log them straight in
       const { token, role, fullName } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
@@ -78,13 +74,13 @@ function Login() {
     }
   };
 
-  // Step 2 — after they pick a role
+  // ✅ FIXED: was axiosInstance, now axios
   const handleRoleSelect = async (selectedRole) => {
     try {
-      const response = await axiosInstance.post(
-        `${API_BASE_URL}/api/auth/google`,
-        { token: googlePending.token, role: selectedRole },
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/auth/google`, {
+        token: googlePending.token,
+        role: selectedRole,
+      });
 
       const { token, role, fullName } = response.data;
       localStorage.setItem("token", token);
@@ -99,7 +95,6 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-slate-50/50 flex items-center justify-center py-16 px-4 antialiased">
-      {/* ROLE PICKER MODAL — shows for new Google users only */}
       {showRolePicker && (
         <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8">
@@ -216,38 +211,35 @@ function Login() {
           <div className="flex-1 h-px bg-slate-100"></div>
         </div>
 
-        {/* GOOGLE BUTTON CONTAINER */}
+        {/* GOOGLE BUTTON */}
         <div className="w-full flex justify-center items-center mt-4">
-          {/* The colorScheme style keeps the iframe rendering clean across dark/light transitions */}
           <div
             style={{ colorScheme: "light" }}
             className="w-full flex justify-center"
           >
             <GoogleLogin
-              onSuccess={handleGoogleSuccess} // replace with your success handler
+              onSuccess={handleGoogleSuccess}
               onError={() => console.log("Login Failed")}
-              // 1. DISABLES AUTOMATIC EMAIL PICKING & PROMPTS
-              auto_select={false} // 👈 Stops Google from automatically logging you in without a click
-              useOneTap={false} // 👈 Stops the intrusive floating sidebar banner prompt
-              // 2. FORCES UNIFORM COMPONENT TEXT
-              text="signin_with" // Options: "signin_with" | "signup_with" | "continue_with"
+              auto_select={false}
+              useOneTap={false}
+              text="signin_with"
               shape="rectangular"
               theme="outline"
               size="large"
-              // 3. FIXES ALIGNMENT TRAP
-              width="320" // 👈 CRITICAL: Shrinks the actual iframe boundary block to 320px
+              width="320"
             />
           </div>
         </div>
 
+        {/* ✅ FIXED: was <a href>, now <Link to> */}
         <p className="mt-8 text-center text-xs font-semibold text-slate-400 tracking-tight">
           Don't have an account?{" "}
-          <a
-            href="/register"
+          <Link
+            to="/register"
             className="text-indigo-600 font-bold hover:text-indigo-800 transition pl-0.5"
           >
             Register here
-          </a>
+          </Link>
         </p>
       </div>
     </div>
