@@ -20,9 +20,10 @@ function PostRequestModal({ onClose, onPostSuccess }) {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token");
+      const API_BASE_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-      await axios.post("http://localhost:5000/api/requests", formData, {
+      await axios.post(`${API_BASE_URL}/api/requests`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

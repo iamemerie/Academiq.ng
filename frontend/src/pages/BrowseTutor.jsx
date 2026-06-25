@@ -16,7 +16,7 @@ function BrowseTutors() {
 
         // 1. Fetch available tutors
         const tutorsResponse = await axios.get(
-          "http://localhost:5000/api/auth/tutors",
+          `${API_BASE_URL}/api/auth/tutors`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -25,7 +25,7 @@ function BrowseTutors() {
 
         // 2. Fetch student requests matching dashboard state
         const requestsResponse = await axios.get(
-          "http://localhost:5000/api/requests/my-requests",
+          `${API_BASE_URL}/api/requests/my-requests`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

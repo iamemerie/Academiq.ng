@@ -16,8 +16,11 @@ const MyBookings = () => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem("token");
+        const API_BASE_URL =
+          import.meta.env.VITE_API_URL || "http://localhost:5000";
+
         const response = await fetch(
-          "http://localhost:5000/api/bookings/my-bookings",
+          `${API_BASE_URL}/api/bookings/my-bookings`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +52,7 @@ const MyBookings = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:5000/api/bookings/${id}/status`,
+        `${API_BASE_URL}/api/bookings/${id}/status`,
         {
           method: "PUT",
           headers: {

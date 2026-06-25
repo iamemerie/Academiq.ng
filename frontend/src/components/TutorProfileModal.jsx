@@ -58,7 +58,7 @@ function TutorProfileModal({ tutor, onClose }) {
 
       // Availability slots are already structured as an array of objects!
       await axios.put(
-        "http://localhost:5000/api/auth/update-profile",
+        `${API_BASE_URL}/api/auth/update-profile`,
         {
           bio: formData.bio,
           subjects: formData.subjects

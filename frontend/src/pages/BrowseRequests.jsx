@@ -11,7 +11,7 @@ function BrowseRequests() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:5000/api/requests/all",
+          `${API_BASE_URL}/api/requests/all`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

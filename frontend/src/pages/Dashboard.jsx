@@ -22,7 +22,7 @@ function Dashboard() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/requests/my-requests",
+        `${API_BASE_URL}/api/requests/my-requests`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
