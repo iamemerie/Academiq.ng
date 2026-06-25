@@ -22,6 +22,7 @@ function PostRequestModal({ onClose, onPostSuccess }) {
     try {
       const API_BASE_URL =
         import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const token = localStorage.getItem("token");
 
       await axios.post(`${API_BASE_URL}/api/requests`, formData, {
         headers: {
@@ -38,6 +39,7 @@ function PostRequestModal({ onClose, onPostSuccess }) {
 
       onClose();
     } catch (error) {
+      console.error("Post request error:", error);
       alert(error.response?.data?.message || "Something went wrong");
     }
   };

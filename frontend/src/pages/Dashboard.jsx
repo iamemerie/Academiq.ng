@@ -5,6 +5,9 @@ import SessionManager from "./SessionManager";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+// Automatically swaps between your live Render URL on Netlify and localhost on your computer
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
