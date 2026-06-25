@@ -162,7 +162,7 @@ function Login() {
           <input
             type="email"
             name="email"
-            placeholder="Email Address"
+            placeholder="email address"
             className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm bg-slate-50/30 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition"
             value={loginData.email}
             onChange={handleChange}
@@ -173,7 +173,7 @@ function Login() {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder="password"
               className="w-full border border-slate-200 rounded-xl pl-4 pr-12 py-3 text-sm bg-slate-50/30 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition"
               value={loginData.password}
               onChange={handleChange}

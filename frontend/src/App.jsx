@@ -11,6 +11,8 @@ import MyBookings from "./pages/MyBookings";
 import SessionManager from "./pages/SessionManager";
 import AdminDashboard from "./pages/AdminDashboard";
 import AIAssistant from "./pages/AIAssistant";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function App() {
   return (
