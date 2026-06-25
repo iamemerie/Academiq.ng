@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function BrowseRequests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);

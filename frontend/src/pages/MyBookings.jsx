@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ReviewModal from "../components/ReviewModal";
 import Navbar from "../components/Navbar";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,8 +18,6 @@ const MyBookings = () => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem("token");
-        const API_BASE_URL =
-          import.meta.env.VITE_API_URL || "http://localhost:5000";
 
         const response = await fetch(
           `${API_BASE_URL}/api/bookings/my-bookings`,

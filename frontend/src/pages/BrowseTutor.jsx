@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import BookingModal from "../components/BookingModal";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function BrowseTutors() {
   const [tutors, setTutors] = useState([]);
   const [studentRequests, setStudentRequests] = useState([]);

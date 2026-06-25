@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const ReviewModal = ({ booking, onClose, onReviewSubmitted }) => {
   const [rating, setRating] = useState(5);
   const [hoveredRating, setHoveredRating] = useState(0);
