@@ -225,8 +225,8 @@ function Login() {
               text="signin_with"
               shape="rectangular"
               theme="outline"
-              size="large"
-              width="320"
+              size="medium"
+              width="100%"
             />
           </div>
         </div>

@@ -6,4 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/', // 🔴 CRITICAL: Forces absolute asset paths across all production routes
+  server: {
+    historyApiFallback: true, // Ensures SPA routing works in development
+  },
 })

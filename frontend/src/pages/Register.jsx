@@ -208,15 +208,23 @@ function Register() {
         </div>
 
         {/* GOOGLE BUTTON */}
-        <div className="w-full flex justify-center [&>div]:w-full">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => alert("Google Sign Up Blocked or Failed")}
-            text="signup_with"
-            shape="rectangular"
-            theme="outline"
-            width="100%"
-          />
+        <div className="w-full flex justify-center items-center mt-4">
+          <div
+            style={{ colorScheme: "light" }}
+            className="w-full flex justify-center"
+          >
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => alert("Google Sign Up Blocked or Failed")}
+              auto_select={false}
+              useOneTap={false}
+              text="signup_with"
+              shape="rectangular"
+              theme="outline"
+              size="medium"
+              width="100%"
+            />
+          </div>
         </div>
 
         {/* ✅ FIXED: was <a href>, now <Link to> */}
