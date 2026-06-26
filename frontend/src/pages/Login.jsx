@@ -45,9 +45,16 @@ function Login() {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
+      console.log("✅ Google login button clicked!");
+      console.log("  credentialResponse received:", credentialResponse);
+      console.log("  Token exists:", !!credentialResponse.credential);
+      console.log("  API_BASE_URL:", API_BASE_URL);
+
       const response = await axios.post(`${API_BASE_URL}/api/auth/google`, {
         token: credentialResponse.credential,
       });
+
+      console.log("✅ Backend response received:", response.data);
 
       if (response.data.needsRole) {
         setGooglePending({
@@ -70,6 +77,9 @@ function Login() {
         navigate("/dashboard");
       }
     } catch (error) {
+      console.error("❌ Frontend Google auth error:", error);
+      console.error("  Error response:", error.response);
+      console.error("  Error message:", error.message);
       alert(error.response?.data?.message || "Google authentication failed");
     }
   };

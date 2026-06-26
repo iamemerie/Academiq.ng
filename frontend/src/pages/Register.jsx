@@ -61,6 +61,11 @@ function Register() {
   };
 
   const handleGoogleSuccess = async (credentialResponse) => {
+    console.log("✅ Register Google button clicked!");
+    console.log("  Form role selected:", formData.role);
+    console.log("  credentialResponse:", credentialResponse);
+    console.log("  Token exists:", !!credentialResponse.credential);
+
     if (!formData.role) {
       alert(
         "Please select your account type (Student or Tutor) before signing up with Google."
@@ -75,6 +80,8 @@ function Register() {
         role: formData.role,
       });
 
+      console.log("✅ Register backend response:", response.data);
+
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("fullName", response.data.fullName);
       localStorage.setItem("role", response.data.role);
@@ -82,7 +89,8 @@ function Register() {
       alert(`Welcome ${response.data.fullName}! Authentication successful.`);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Google Auth Error:", error);
+      console.error("❌ Register Google Auth Error:", error);
+      console.error("  Error response:", error.response);
       alert(error.response?.data?.message || "Google Authentication failed");
     }
   };
