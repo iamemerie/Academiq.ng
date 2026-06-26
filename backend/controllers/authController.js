@@ -75,15 +75,29 @@ const googleLogin = async (req, res) => {
   try {
     const { token, role } = req.body;
 
-    console.log("Google login received role:", role);
+    console.log("📥 Google login request received!");
+    console.log("  Token exists:", !!token);
+    console.log("  Role:", role);
+    console.log("  GOOGLE_CLIENT_ID env var:", !!process.env.GOOGLE_CLIENT_ID ? "✅ Set" : "❌ NOT SET!");
 
+    if (!process.env.GOOGLE_CLIENT_ID) {
+      console.error("GOOGLE_CLIENT_ID is missing in environment variables!");
+      return res.status(500).json({ message: "Server configuration error: GOOGLE_CLIENT_ID not set" });
+    }
+
+    console.log("🔍 Verifying Google token...");
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
     const { name, email } = ticket.getPayload();
+    console.log("✅ Token verified!");
+    console.log("  Name:", name);
+    console.log("  Email:", email);
+    
     let user = await User.findOne({ email });
+    console.log("  Existing user found:", !!user);
 
     // Existing user — log in directly
     if (user) {
@@ -121,9 +135,11 @@ const googleLogin = async (req, res) => {
     });
 
   } catch (error) {
+    console.error("❌ Google authentication error:", error);
     res.status(401).json({
       message: "Google authentication failed",
       error: error.message,
+      details: error.stack
     });
   }
 };
