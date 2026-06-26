@@ -1,9 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
-
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -78,24 +75,31 @@ const googleLogin = async (req, res) => {
     console.log("📥 Google login request received!");
     console.log("  Token exists:", !!token);
     console.log("  Role:", role);
-    console.log("  GOOGLE_CLIENT_ID env var:", !!process.env.GOOGLE_CLIENT_ID ? "✅ Set" : "❌ NOT SET!");
 
-    if (!process.env.GOOGLE_CLIENT_ID) {
-      console.error("GOOGLE_CLIENT_ID is missing in environment variables!");
-      return res.status(500).json({ message: "Server configuration error: GOOGLE_CLIENT_ID not set" });
+    // ✅ FIXED: Use Google's tokeninfo endpoint instead of google-auth-library
+    // This avoids the 403 certificate fetch error on Render free tier
+    const googleRes = await fetch(
+      `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`
+    );
+
+    const payload = await googleRes.json();
+
+    if (!googleRes.ok || payload.error) {
+      console.error("❌ Token verification failed:", payload);
+      return res.status(401).json({ message: "Invalid Google token" });
     }
 
-    console.log("🔍 Verifying Google token...");
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
+    // Verify the token was issued for our app
+    if (payload.aud !== process.env.GOOGLE_CLIENT_ID) {
+      console.error("❌ Token audience mismatch");
+      return res.status(401).json({ message: "Token audience mismatch" });
+    }
 
-    const { name, email } = ticket.getPayload();
+    const { name, email } = payload;
     console.log("✅ Token verified!");
     console.log("  Name:", name);
     console.log("  Email:", email);
-    
+
     let user = await User.findOne({ email });
     console.log("  Existing user found:", !!user);
 
@@ -139,7 +143,7 @@ const googleLogin = async (req, res) => {
     res.status(401).json({
       message: "Google authentication failed",
       error: error.message,
-      details: error.stack
+      details: error.stack,
     });
   }
 };
